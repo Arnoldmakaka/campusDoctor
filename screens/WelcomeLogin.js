@@ -21,42 +21,42 @@ export default class WelcomeLogin extends Component {
   _loginData = () => {
     const {sex, college, name, email, pno} = this.state
       //if (this.state.email != '' && this.state.pno != '' && this.state.name != ''){
-        firebase.auth().signInWithPhoneNumber(pno)
-        .then((confirmResult) => {
-          
-              this.setState({ confirmResult });
+        //firebase.auth().signInWithPhoneNumber(pno)
+        //.then((confirmResult) => {
+              //this.setState({ confirmResult });
+              //this.gaiish()
               this.props.navigation.navigate('Verify')
-           }) 
-          .catch((error) => {
-            const { code, message } = error;
-            alert(code)
+          // }).catch((error) => {
+            //const { code, message } = error;
+            //Alert.alert('Error Occured', 'Please try again later')
             // For details of error codes, see the docs
             // The message contains the default Firebase string
             // representation of the error
-          });
-        
-    // }
-    // else{
+          //});  
+    //}
+    //else{
       //Alert.alert('Missing Fields', 'Please fill in all the required fields');
-     //}
+    //}
   }
   
-  /*_loginData = async () => {
+  gaiish = async () => {
     var loginData = {
-      name: this.state.name,
-      email: this.state.email,
-      sex: this.state.sex,
-      college: this.state.college,
-      pno: this.state.pno
+      confirmResult: this.state.confirmResult
     }
     try {
       await AsyncStorage.setItem('@key_login', JSON.stringify(loginData));
-        this.props.navigation.navigate('Verify')
-        console.log("Data saved")
+        firebase.database().ref('UserList').push({
+          Sex: sex,
+          Email: email,
+          College: college,
+          Name: name,
+          PhoneNumber: pno
+        })
+        alert("Data saved")
       }catch (error) {
         alert("failed")
       }
-  }*/
+  }
 
   render() {
     let {sex, college} = this.state
@@ -107,7 +107,7 @@ export default class WelcomeLogin extends Component {
               </View>  
 
               <View style={{justifyContent: 'center', alignItems: 'flex-end', marginVertical: 15,}}>
-                <TouchableOpacity onPress={()=>this.props.navigation.navigate('Verify')} style={{height: 50, width: 50, borderRadius: 25, backgroundColor: '#00528e', justifyContent: 'center', alignItems: 'center',}}>
+                <TouchableOpacity onPress={()=>this._loginData()} style={{height: 50, width: 50, borderRadius: 25, backgroundColor: '#00528e', justifyContent: 'center', alignItems: 'center',}}>
                   <Icon name="arrow-forward" style={{paddingHorizontal: 15, paddingVertical: 15, color: '#ffffff'}} size={30} />
                 </TouchableOpacity>
               </View> 

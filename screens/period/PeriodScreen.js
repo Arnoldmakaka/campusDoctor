@@ -179,7 +179,7 @@ export default class PeriodScreen extends Component {
               </View>
 
               <View style={{alignItems: 'flex-end', justifyContent: 'flex-end',}}>
-              <TouchableOpacity onPress={() => this.props.navigation.navigate('Edit')} style={{backgroundColor: '#6f82c6', borderRadius: 4,}}>
+              <TouchableOpacity onPress={() => this.props.navigation.navigate('Edit')} style={{backgroundColor: '#00528e', borderRadius: 4, marginBottom: 10,}}>
                   <Text style={{textAlign: 'center', paddingHorizontal: 15, paddingVertical: 12, color: '#ffffff', fontSize: 14,}}>Edit Preferences</Text>
                 </TouchableOpacity>
               </View>
@@ -205,7 +205,7 @@ export default class PeriodScreen extends Component {
               // Hide month navigation arrows. Default = false
               hideArrows={false}
               // Replace default arrows with custom ones (direction can be 'left' or 'right')
-              renderArrowLeft={(direction) => (<Icon name="arrow-left" style={{paddingLeft: 15, paddingRight: 15, color: '#6f82c6'}} size={50} />)}
+              renderArrowLeft={(direction) => (<Icon name="arrow-left" style={{paddingLeft: 15, paddingRight: 15, color: '#00528e'}} size={50} />)}
               //renderArrow={(right) => (<Icon name="arrow-forward" style={{paddingLeft: 15, paddingRight: 25, color: '#6f82c6'}} size={30} />)}
               // Do not show days of other months in month page. Default = false
               hideExtraDays={true}
@@ -240,16 +240,16 @@ export default class PeriodScreen extends Component {
               theme={{
                 backgroundColor: '#ffffff',
                 calendarBackground: '#ffffff',
-                textSectionTitleColor: '#6f82c6',
-                selectedDayBackgroundColor: '#6f82c6',
+                textSectionTitleColor: '#00528e',
+                selectedDayBackgroundColor: '#00528e',
                 selectedDayTextColor: '#ffffff',
                 todayTextColor: '#263c91',
                 dayTextColor: '#2d4150',
                 textDisabledColor: '#d9e1e8',
                 dotColor: '#00adf5',
                 selectedDotColor: '#ffffff',
-                arrowColor: '#6f82c6',
-                monthTextColor: '#6f82c6',
+                arrowColor: '#00528e',
+                monthTextColor: '#00528e',
                 textDayFontFamily: 'monospace',
                 textMonthFontFamily: 'monospace',
                 textDayHeaderFontFamily: 'monospace',
@@ -276,7 +276,7 @@ const styles = StyleSheet.create({
   modal: {
     flex: 1,
     backgroundColor: '#ffffff',
-    borderTopColor: '#6f82c6',
+    borderTopColor: '#00528e',
     borderTopWidth: 2,
   },
 });

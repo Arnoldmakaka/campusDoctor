@@ -84,16 +84,22 @@ export default class Notebook extends Component {
     if (this.state.showNoteDetail) {
       return (
           <View style={styles.main}>
-            <View style={{flex: 1, backgroundColor: "#5F85F0"}}>
-              <TouchableOpacity
-                  style={styles.backBtn}
-                  onPress={() =>
-                      this.setState({showNoteDetail: false, currentNote: ""})
-                  }
-              >
-                <Text style={styles.backArrow}> {"<"} </Text>
-              </TouchableOpacity>
-            </View>
+            <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#263c91', '#6f82c6', '#d71a3a']} style={{height: 80, marginBottom: 10,}}>
+              <View style={{height: 24,}}>
+                <StatusBar barStyle = "light-content" hidden = {false} backgroundColor={'transparent'} translucent = {true}/>
+              </View>
+        
+              <View style={{height: 56, flexDirection: 'row',}}>
+                <View style={{alignItems: 'center', justifyContent: 'center',}}>
+                  <TouchableOpacity onPress={() =>this.setState({showNoteDetail: false, currentNote: ""})}>
+                    <Icon name="arrow-back" style={{paddingLeft: 15, paddingRight: 25, color: '#ffffff'}} size={30} />
+                  </TouchableOpacity>
+                </View>
+                <View style={{alignItems:  'center', justifyContent: 'center',}}>
+                  <Text style={{textAlign: 'center', color: '#ffffff', fontSize: 20 }}>Notebook Details</Text>
+                </View>
+              </View>
+            </LinearGradient>
             <NoteDetail note={this.state.currentNote}/>
           </View>
       );

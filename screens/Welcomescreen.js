@@ -43,10 +43,10 @@ export default class Welcomescreen extends Component {
             <View style={{height: 24,}}>
               <StatusBar barStyle = "light-content" hidden = {false} backgroundColor={'transparent'} translucent = {true}/>
             </View>
-            <View style={{flex: 1, backgroundColor: 'rgba(255,255,255,0.2)', justifyContent: 'center',}}>
+            <View style={{flex: 1, justifyContent: 'center',}}>
               <View style={{flex: 1, justifyContent: 'center', alignItems: 'flex-end', marginRight: 10, marginBottom: 120,}}>
                 <View style={{backgroundColor: 'rgba(255,255,255,0.1)', paddingHorizontal: 20, borderRadius: 4,}}>
-                  <Image style={{height:80, width:80}} source={require('../assests/camplogo.png')} />
+                  
                 </View>
               </View>
             </View>  

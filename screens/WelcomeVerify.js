@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, StatusBar, AsyncStorage, KeyboardAvoidingView, Picker, TextInput, ScrollView, TouchableOpacity} from 'react-native';
+import {Platform, StyleSheet, Text, Alert, View, StatusBar, AsyncStorage, KeyboardAvoidingView, Picker, TextInput, ScrollView, TouchableOpacity} from 'react-native';
 import {Icon} from 'native-base';
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -7,11 +7,9 @@ export default class WelcomeVerify extends Component {
   constructor(){
     super()
     this.state = {
-      sex: '',
-      college: '',
-      name: '',
-      email: '',
-      pno: '',
+      confirmResult: '',
+      verificationCode: '',
+      code: '',
     }
   }
 
@@ -21,18 +19,32 @@ export default class WelcomeVerify extends Component {
       var loginData = JSON.parse(r)
       console.log('r:'+r)
      this.setState({
-        name: loginData.name,
-        email: loginData.email,
-        sex: loginData.sex,
-        college: loginData.college,
-        pno: loginData.pno
+        confirmResult: loginData.confirmResult
       })
     })
   }
 
+  onVerificationCode = () => {
+    const { confirmResult, verificationCode } = this.state;
+    confirmResult.confirm(verificationCode)
+      .then((user) => {
+        // If you need to do anything with the user, do it here
+        // The user will be logged in automatically by the
+        // `onAuthStateChanged` listener we set up in App.js earlier
+        if (this.state.pno == this.state.code){
+          
+        }
+        else{
+          Alert.alert('Error Occured', 'Incorrect code')
+        }
+      })
+      .catch((error) => {
+        const { code, message } = error;
+        Alert.alert('Error Occured', 'Please try again later')
+      });
+  }
+
   render() {
-    let {sex, college, name, email, pno} = this.state
-    alert(sex)
     return (
       <View style={styles.container}>
         <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#263c91', '#6f82c6', '#d71a3a']} style={{height: 80, marginBottom: 10,}}>
@@ -58,10 +70,10 @@ export default class WelcomeVerify extends Component {
             <KeyboardAvoidingView style={{flex: 1, paddingHorizontal: 10}} behavior="padding" enabled>
               <View style={{marginVertical: 15,}}>
                 <Text style={{textAlign: 'center', fontSize: 13, fontStyle: 'italic', color: '#00528e',}}>A code has been sent to your mobile number for verification.</Text>
-                <TextInput placeholder="Enter verification code" style={{textAlign: 'left', height: 40, color: '#00528e', borderBottomColor: '#00528e', borderBottomWidth: 2, marginVertical: 7}}/>
+                <TextInput onChangeText={(code)=>this.setState({code})} placeholder="Enter verification code" style={{textAlign: 'left', height: 40, color: '#00528e', borderBottomColor: '#00528e', borderBottomWidth: 2, marginVertical: 7}}/>
               </View>
               <View style={{justifyContent: 'center', alignItems: 'flex-end', marginVertical: 15,}}>
-                <TouchableOpacity onPress={() => this.props.navigation.navigate('Dash')} style={{height: 50, width: 50, borderRadius: 25, backgroundColor: '#00528e', justifyContent: 'center', alignItems: 'center',}}>
+                <TouchableOpacity onPress={()=>this.props.navigation.navigate('Dash')} style={{height: 50, width: 50, borderRadius: 25, backgroundColor: '#00528e', justifyContent: 'center', alignItems: 'center',}}>
                   <Icon name="arrow-forward" style={{paddingHorizontal: 15, paddingVertical: 15, color: '#ffffff'}} size={30} />
                 </TouchableOpacity>
               </View>

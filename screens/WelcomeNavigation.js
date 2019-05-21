@@ -10,6 +10,9 @@ import WelcomeLogin from './WelcomeLogin';
 import WelcomeVerify from './WelcomeVerify';
 import Dashboard from './Dashboard';
 import Mychat from './chat/Mychat';
+import GeneralChat from './chat/GeneralChat';
+import SkinChat from './chat/SkinChat';
+import SexualChat from './chat/SexualChat';
 import DosageHistory from './dosage/DosageHistory';
 import Prescription from './dosage/Prescription';
 import PeriodScreen from './period/PeriodScreen';
@@ -68,7 +71,10 @@ const AppSwitchNavigator = createSwitchNavigator({
 	Period: {screen: PeriodScreen},
 	Edit: {screen: EditPeriod},
 	Note: {screen: Notebook},
-	PreProfile: {screen: Profile}
+	PreProfile: {screen: Profile},
+  Gen: {screen: GeneralChat},
+  Skin: {screen: SkinChat},
+  Sex: {screen: SexualChat}
 });
 
 const AppContainer = createAppContainer(AppSwitchNavigator); 

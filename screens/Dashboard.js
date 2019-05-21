@@ -48,7 +48,7 @@ export default class Dashboard extends Component {
     try {
       const result = await Share.share({
         message:
-          'React Native | A framework for building native apps using React',
+          'Campus Doctor is a new Health Application that allows you to have free and unlimited consultaions with the best Doctors, track your menstrual cycle and set reminders for your prescriptions. Download the free app from the PlayStore',
       });
       if (result.action === Share.sharedAction) {
         if (result.activityType) {
@@ -158,7 +158,7 @@ export default class Dashboard extends Component {
                 <DashboardViews imageUri={require('../assests/network.png')} label = "Share With Friends"/>
               </TouchableOpacity>
 
-              <TouchableOpacity style={{flex: 1, justifyContent: 'space-between', alignItems: 'center',}} onPress={ () => Linking.openURL('https://www.thecampusdoctor.com')}>
+              <TouchableOpacity style={{flex: 1, justifyContent: 'space-between', alignItems: 'center',}} onPress={ () => Linking.openURL('https://www.thecampusdoc.com')}>
                 <DashboardViews imageUri={require('../assests/more.png')} label = "More"/>
               </TouchableOpacity>
             </View>

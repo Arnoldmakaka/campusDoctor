@@ -27,7 +27,7 @@ export default class Prescription extends Component {
       try {
         await AsyncStorage.setItem('@key_dosage', JSON.stringify(dosageData));
           this.props.navigation.navigate('Dose')
-          alert(JSON.stringify(this.state.tab))
+          //alert(JSON.stringify(this.state.tab))
           //alert(typeof(this.state.perioddate))
         }catch (error) {
         //alert("failed")

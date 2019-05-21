@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, YellowBox, View} from 'react-native';
 YellowBox.ignoreWarnings(['Warning: componentWill'])
 import WelcomeNavigation from './screens/WelcomeNavigation';
+console.disableYellowBox = true;
 
 export default class App extends Component {
   render() {

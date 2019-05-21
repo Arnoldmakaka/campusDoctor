@@ -16,21 +16,24 @@ export default class EditPeriod extends Component {
   }
 
   _storeData = async () => {
-    var periodData = {
-      numofperiod: this.state.numofperiod,
-      lengthofperiod: this.state.lengthofperiod,
-      perioddate: this.state.perioddate
-    }
-    //alert(this.state.perioddate)
-      try {
-        await AsyncStorage.setItem('@key_period', JSON.stringify(periodData));
-        this.props.navigation.navigate('BottomNavigator')
-        console.log("Data saved")
-        //alert(typeof(this.state.perioddate))
-      } catch (error) {
-        // Error saving data
+    const {numofperiod, perioddate} = this.state
+    if (this.state.numofperiod != '' && this.state.perioddate != ''){
+      var periodData = {
+        numofperiod: this.state.numofperiod,
+        lengthofperiod: this.state.lengthofperiod,
+        perioddate: this.state.perioddate
       }
-    
+      //alert(this.state.perioddate)
+        try {
+          await AsyncStorage.setItem('@key_period', JSON.stringify(periodData));
+          this.props.navigation.navigate('BottomNavigator')
+          console.log("Data saved")
+          //alert(typeof(this.state.perioddate))
+        } catch (error) {
+          // Error saving data
+        }
+    }
+    else{Alert.alert('Missing Fields', 'Please fill in all the required fields');}
   }
 
   render() {
@@ -58,10 +61,9 @@ export default class EditPeriod extends Component {
         <View style={{flex:1,}}>
           <ScrollView>
             <KeyboardAvoidingView style={{flex: 1, marginHorizontal: 10}} behavior="padding" enabled>
-              <Text style={{textAlign: 'center', fontSize: 20, color: '#6f82c6', fontWeight: 'bold', marginVertical: 10}}>Preferences</Text>
                 <View style={{marginHorizontal: 10}}>
-                  <Text style={{fontSize: 16, fontStyle: 'normal', color: '#6f82c6', paddingVertical: 5, fontWeight: '700',}}>Date of first period</Text>
-                  <Text style={{fontSize: 12, fontStyle: 'normal', color: '#6f82c6', paddingBottom: 5, fontWeight: '700',}}>Tap the date box to pick date</Text>
+                  <Text style={{fontSize: 16, fontStyle: 'normal', color: '#00528e', paddingVertical: 5, fontWeight: '700',}}>Date of first period</Text>
+                  <Text style={{fontSize: 12, fontStyle: 'normal', color: '#00528e', paddingBottom: 5, fontWeight: '700',}}>Tap the date box to pick date</Text>
                   <DatePicker
                     style={{width: 250, marginVertical: 10}}
                     date={this.state.perioddate}
@@ -83,27 +85,27 @@ export default class EditPeriod extends Component {
                         marginLeft: 36,
                       },
                       dateText: {
-                        color: '#6f82c6',
+                        color: '#00528e',
                       },
                       // ... You can check the source to find the other keys.
                     }}
                     onDateChange={(perioddate) => {this.setState({perioddate: perioddate})}}
                   />
-                  <Text style={{fontSize: 16, fontStyle: 'normal', color: '#6f82c6', paddingVertical: 5, fontWeight: '700',}}>Number of period days</Text>
-                  <TextInput onChangeText={(numofperiod)=>this.setState({numofperiod})} returnKeyType='next' placeholder="4" keyboardType="numeric" maxLength = {31} style={{textAlign: 'left', height: 40, color: '#6f82c6', borderBottomColor: '#6f82c6', borderBottomWidth: 2, marginVertical: 7}}/>
-                  <Text style={{fontSize: 16, fontStyle: 'normal', color: '#6f82c6', paddingVertical: 5, fontWeight: '700',}}>Length of cycle</Text>
-                  <TextInput onChangeText={(lengthofperiod)=>this.setState({lengthofperiod})} returnKeyType='done' placeholder="21" keyboardType="numeric" maxLength = {35} style={{textAlign: 'left', height: 40, color: '#6f82c6', borderBottomColor: '#6f82c6', borderBottomWidth: 2, marginVertical: 7}}/>
+                  <Text style={{fontSize: 16, fontStyle: 'normal', color: '#00528e', paddingVertical: 5, fontWeight: '700',}}>Number of period days</Text>
+                  <TextInput onChangeText={(numofperiod)=>this.setState({numofperiod})} returnKeyType='next' placeholder="4" keyboardType="numeric" maxLength = {31} style={{textAlign: 'left', height: 40, color: '#00528e', borderBottomColor: '#00528e', borderBottomWidth: 2, marginVertical: 7}}/>
+                  <Text style={{fontSize: 16, fontStyle: 'normal', color: '#00528e', paddingVertical: 5, fontWeight: '700',}}>Length of cycle</Text>
+                  <TextInput onChangeText={(lengthofperiod)=>this.setState({lengthofperiod})} returnKeyType='done' placeholder="21" keyboardType="numeric" maxLength = {35} style={{textAlign: 'left', height: 40, color: '#00528e', borderBottomColor: '#00528e', borderBottomWidth: 2, marginVertical: 7}}/>
                 </View>
 
                 <View style={{flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 20,}}>
                   <View style={{justifyContent: 'flex-start', marginHorizontal: 15,}}>
-                    <TouchableOpacity onPress={()=>this._storeData()} style={{height: 50, width: 50, borderRadius: 25, backgroundColor: '#6f82c6', justifyContent: 'center', alignItems: 'center',}}>
+                    <TouchableOpacity onPress={()=>this._storeData()} style={{height: 50, width: 50, borderRadius: 25, backgroundColor: '#00528e', justifyContent: 'center', alignItems: 'center',}}>
                       <Icon name="checkmark" style={{paddingHorizontal: 15, paddingVertical: 15, color: '#ffffff'}} size={30} />
                     </TouchableOpacity>
                   </View>
 
                   <View style={{justifyContent: 'flex-end', marginHorizontal: 15,}}>
-                    <TouchableOpacity onPress = {() => {this.props.navigation.navigate('BottomNavigator')}} style={{height: 50, width: 50, borderRadius: 25, backgroundColor: '#6f82c6', justifyContent: 'center', alignItems: 'center',}}>
+                    <TouchableOpacity onPress = {() => {this.props.navigation.navigate('BottomNavigator')}} style={{height: 50, width: 50, borderRadius: 25, backgroundColor: '#00528e', justifyContent: 'center', alignItems: 'center',}}>
                       <Icon name="close" style={{paddingHorizontal: 15, paddingVertical: 15, color: '#ffffff'}} size={30} />
                     </TouchableOpacity>
                   </View>  
