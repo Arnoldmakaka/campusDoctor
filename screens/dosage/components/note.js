@@ -10,8 +10,15 @@ export default props => (
     <View style={{flexDirection: 'row', justifyContent: 'space-between', borderColor: '#00528e', borderRadius: 4, borderWidth: 2,}}>
 
       <View style={{flex: 1, paddingHorizontal: 10, paddingVertical: 5,}}>
+
+        <View style={{flexDirection: 'row', paddingTop: 5, paddingBottom: 3, alignItems: 'center',}}>
+          <TouchableOpacity onPress={() => {props.handleDelete(props.position)}}style={{height: 24, width: 24, backgroundColor: '#00528e', justifyContent: 'center', alignItems: 'center',
+          borderColor: '#00528e', borderRadius: 4, borderWidth: 1,}}>
+            <Text style={{textAlign: 'center', color: '#ffffff', fontSize: 12, paddingHorizontal: 2,}}>Delete</Text>
+          </TouchableOpacity>
+        </View>
         
-        <View style={{flexDirection: 'row', paddingTop: 7, paddingBottom: 3,}}>
+        <View style={{flexDirection: 'row', paddingBottom: 3,}}>
           <View>
             <Text style={{ fontSize: 14, color: '#000000', fontWeight: '400',}}>Dose Name: </Text>
           </View>
@@ -40,12 +47,7 @@ export default props => (
 
       </View>  
 
-      <View style={{justifyContent: 'flex-start', alignItems: 'flex-end', paddingRight: 5, paddingTop: 13,}}>
-        <TouchableOpacity onPress={() => {props.handleDelete(props.position)}}style={{height: 24, width: 24, backgroundColor: '#00528e', justifyContent: 'center', alignItems: 'center',
-          borderColor: '#00528e', borderRadius: 4, borderWidth: 1,}}>
-          <Text style={{textAlign: 'center', color: '#ffffff', fontSize: 12, paddingHorizontal: 2,}}>Del</Text>
-        </TouchableOpacity>
-      </View>
+      
     
     </View>
   </View>

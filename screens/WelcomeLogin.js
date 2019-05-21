@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, StatusBar, AsyncStorage, KeyboardAvoidingView, Picker, TextInput, ScrollView, TouchableOpacity} from 'react-native';
+import {Platform, StyleSheet, Text, Alert, View, StatusBar, AsyncStorage, KeyboardAvoidingView, Picker, TextInput, ScrollView, TouchableOpacity} from 'react-native';
 import {Icon} from 'native-base';
 import LinearGradient from 'react-native-linear-gradient';
+import firebase from 'react-native-firebase'
 
 export default class WelcomeLogin extends Component {
   constructor(props) {
@@ -9,14 +10,38 @@ export default class WelcomeLogin extends Component {
   }
 
   state ={
-    sex: '',
-    college: '',
+    sex: 'Male',
+    college: 'Mak',
     name: '',
     email: '',
     pno: '',
+    confirmResult: '',
+  }
+
+  _loginData = () => {
+    const {sex, college, name, email, pno} = this.state
+      //if (this.state.email != '' && this.state.pno != '' && this.state.name != ''){
+        firebase.auth().signInWithPhoneNumber(pno)
+        .then((confirmResult) => {
+          
+              this.setState({ confirmResult });
+              this.props.navigation.navigate('Verify')
+           }) 
+          .catch((error) => {
+            const { code, message } = error;
+            alert(code)
+            // For details of error codes, see the docs
+            // The message contains the default Firebase string
+            // representation of the error
+          });
+        
+    // }
+    // else{
+      //Alert.alert('Missing Fields', 'Please fill in all the required fields');
+     //}
   }
   
-  _loginData = async () => {
+  /*_loginData = async () => {
     var loginData = {
       name: this.state.name,
       email: this.state.email,
@@ -31,7 +56,7 @@ export default class WelcomeLogin extends Component {
       }catch (error) {
         alert("failed")
       }
-  }
+  }*/
 
   render() {
     let {sex, college} = this.state
@@ -67,8 +92,13 @@ export default class WelcomeLogin extends Component {
                 </Picker>
 
                 <Picker selectedValue={this.state.college} style={{height: 50, width: 300, color: '#00528e',}} onValueChange={(itemValue, itemIndex) => this.setState({college: itemValue}) }>
-                  <Picker.Item label="Makerere University" value="Mak" />
-                  <Picker.Item label="Kyambogo University" value="Kyu" />
+                  <Picker.Item label="Makerere University" value="MAK" />
+                  <Picker.Item label="Kyambogo University" value="KYU" />
+                  <Picker.Item label="Uganda Christian University" value="UCU" />
+                  <Picker.Item label="Mbarara University" value="MUST" />
+                  <Picker.Item label="Islamic University" value="IU" />
+                  <Picker.Item label="Ndejje University" value="Ndejje" />
+                  <Picker.Item label="Kampala International University" value="KIU" />
                 </Picker>  
 
                 <Text style={{textAlign: 'center', fontSize: 18, fontStyle: 'normal', fontWeight: '400', color: '#00528e', paddingVertical: 10,}} >Enter Phone Number for Verification</Text>
@@ -77,7 +107,7 @@ export default class WelcomeLogin extends Component {
               </View>  
 
               <View style={{justifyContent: 'center', alignItems: 'flex-end', marginVertical: 15,}}>
-                <TouchableOpacity onPress={()=>this._loginData()} style={{height: 50, width: 50, borderRadius: 25, backgroundColor: '#00528e', justifyContent: 'center', alignItems: 'center',}}>
+                <TouchableOpacity onPress={()=>this.props.navigation.navigate('Verify')} style={{height: 50, width: 50, borderRadius: 25, backgroundColor: '#00528e', justifyContent: 'center', alignItems: 'center',}}>
                   <Icon name="arrow-forward" style={{paddingHorizontal: 15, paddingVertical: 15, color: '#ffffff'}} size={30} />
                 </TouchableOpacity>
               </View> 

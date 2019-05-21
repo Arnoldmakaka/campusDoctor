@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
-import {Platform, AsyncStorage, ScrollView, StyleSheet, Share, Text, Modal, View, StatusBar, Picker, TextInput, KeyboardAvoidingView, Image, TouchableHighlight, TouchableOpacity, Linking} from 'react-native';
+import {Platform, AsyncStorage, ScrollView, Alert, StyleSheet, Share, Text, Modal, View, StatusBar, Picker, TextInput, KeyboardAvoidingView, Image, TouchableHighlight, TouchableOpacity, Linking} from 'react-native';
 import {Icon} from 'native-base';
 import LinearGradient from 'react-native-linear-gradient';
 import DashboardViews from './components/DashboardViews';
+import firebase from 'react-native-firebase';
 
 export default class Dashboard extends Component {
   state = {
@@ -16,35 +17,27 @@ export default class Dashboard extends Component {
     message: ''
   }
 
-  _storeData = async () => {
-    var appointmentData = {
-      fullname: this.state.fullname,
-      email: this.state.email,
-      mobilenumber: this.state.mobilenumber,
-      message: this.state.message,
-      doctor: this.state.doctor
+  _storeData() {
+    const {message, mobilenumber, email, fullname, doctor} = this.state
+    if (this.state.message != '' && this.state.mobilenumber != '' && this.state.email != '' && this.state.fullname != '' && this.state.doctor != ''){
+      firebase.database().ref('AppointmentList').push({
+        Fullname: fullname,
+        Email: email,
+        PhoneNumber: mobilenumber,
+        Doctor: doctor,
+        Message: message
+      }).then(()=> {
+        //alert("Data saved in firebase")
+          this.toggleModal(!this.state.modalVisible)
+        })
+      .catch((error) => {
+        //alert(error)
+      //const { code, message } = error; });
+      })
     }
-    try {
-      await AsyncStorage.setItem('@key_appointment', JSON.stringify(appointmentData));
-      alert(this.state.doctor)
-      this.toggleModal(!this.state.modalVisible)
-      console.log("Data saved")
-    } catch (error) {
-      // Error saving data
+    else{
+      Alert.alert('Missing Fields', 'Please fill in all the required fields');
     }
-  }
-
-  componentDidMount(){
-    console.log('componentDidMount')
-    AsyncStorage.getItem("@key_appointment").then((r)=>{
-      var appointmented = JSON.parse(r)
-      console.log('r:'+r)
-     this.setState({fullname: appointmented.fullname}),
-     this.setState({mobilenumber: appointmented.mobilenumber}),
-     this.setState({email: appointmented.email}),
-     this.setState({message: appointmented.message}),
-     this.setState({doctor: appointmented.doctor})
-    })
   }
 
    toggleModal(visible) {
@@ -67,7 +60,7 @@ export default class Dashboard extends Component {
         // dismissed
       }
     } catch (error) {
-      alert(error.message);
+      //alert(error.message);
     }
   };
 
@@ -108,8 +101,8 @@ export default class Dashboard extends Component {
                   		<ScrollView>
                         <View style={{marginHorizontal: 10,}}>
                         <TextInput placeholder="Your full name" onChangeText={(fullname)=>this.setState({fullname})} style={{fontSize: 14, textAlign: 'left', color: '#00528e', height: 40, borderBottomColor: '#00528e', borderBottomWidth: 2, marginVertical: 7}}/>
-                        <TextInput placeholder="Your email" onChangeText={(email)=>this.setState({email})} keyboardType='email-address' returnKeyType='next' style={{textAlign: 'left', height: 40, color: '#00528e', borderBottomColor: '#00528e', borderBottomWidth: 2, marginVertical: 7}}/>
-                        <TextInput placeholder="Your mobile number" onChangeText={(mobilenumber)=>this.setState({mobilenumber})} keyboardType='phone-pad' style={{textAlign: 'left', height: 40, color: '#00528e', borderBottomColor: '#00528e', borderBottomWidth: 2, marginVertical: 7}}/>
+                        <TextInput placeholder="Your email" onChangeText={(email)=>this.setState({email})} autoCapitalize='false' keyboardType='email-address' returnKeyType='next' style={{textAlign: 'left', height: 40, color: '#00528e', borderBottomColor: '#00528e', borderBottomWidth: 2, marginVertical: 7}}/>
+                        <TextInput placeholder="Your mobile number" onChangeText={(mobilenumber)=>this.setState({mobilenumber})} autoCapitalize='false' keyboardType='phone-pad'  returnKeyType='next' style={{textAlign: 'left', height: 40, color: '#00528e', borderBottomColor: '#00528e', borderBottomWidth: 2, marginVertical: 7}}/>
                         
                         <TextInput
                           style={styles.TextInputStyleClass}
@@ -145,9 +138,6 @@ export default class Dashboard extends Component {
 
                       
                		</View>
-                  <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#263c91', '#6f82c6', '#d71a3a']} style={{ width: '100%',}}>
-                    <Text style={{color: '#ffffff', paddingVertical: 7, textAlign: 'center', fontSize: 16, fontStyle: 'italic' }}>CampusDoctor</Text>
-                  </LinearGradient>
             	</Modal>
               </View>
             
@@ -194,7 +184,6 @@ const styles = StyleSheet.create({
    },
    TextInputStyleClass:{
       paddingHorizontal: 10,
-      paddingVertical: 10,
       height: 120,
       justifyContent: 'flex-start', 
       alignContent: 'flex-start', 

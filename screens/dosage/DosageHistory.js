@@ -1,87 +1,35 @@
 import React, {Component} from 'react';
-import {Platform, AsyncStorage, StyleSheet, Text, View, StatusBar, KeyboardAvoidingView, Picker, TextInput, ScrollView, TouchableOpacity} from 'react-native';
+import {Platform, AsyncStorage, StyleSheet, ImageBackground, Text, View, StatusBar, KeyboardAvoidingView, Picker, TextInput, ScrollView, TouchableOpacity} from 'react-native';
 import {Icon} from 'native-base';
 import LinearGradient from 'react-native-linear-gradient';
 import DatePicker from 'react-native-datepicker';
 var moment = require('moment')
 
-import Header from "./components/header";
-import Body from "./components/body";
-import AddNote from "./components/addNote";
-
 
 export default class DosageHistory extends Component {
-  
-  state = {
-    notes: [],
-    showAddNote: false,
-    newNote: "",
-    showNoteDetail: false,
-    currentNote: "",
-  };
-
-  loadNotes = async () => {
-    try {
-      let storedNotes = await AsyncStorage.getItem("notes");
-      if(storedNotes)
-        this.setState({notes: JSON.parse(storedNotes)});
-    }catch (e) {
-      console.log(e)
-      alert(e);
+  constructor(){
+    super()
+    this.state = {
+      date: '',
+      tab: '',
+      drug: '',
     }
-  };
+  } 
 
   componentDidMount(){
-    this.loadNotes();
-  }
-
-  save() {
-    let listOfNotes = this.state.notes;
-    let noteToAdd = this.state.newNote;
-    listOfNotes.unshift(noteToAdd);
-    this.setState({
-      notes: listOfNotes,
-      showAddNote: false
-    });
-    AsyncStorage.setItem("notes", JSON.stringify(listOfNotes));
+    console.log('componentDidMount')
+    AsyncStorage.getItem("@key_dosage").then((r)=>{
+      var dosageData = JSON.parse(r)
+      console.log('r:'+r)
+     this.setState({
+        date: dosageData.date,
+        tab: dosageData.tab,
+        drug: dosageData.drug
+      })
+    })
   }
 
   render() {
-    Component;
-    if (this.state.showAddNote) {
-      return (
-          <View style={styles.main}>
-            <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#263c91', '#6f82c6', '#d71a3a']} style={{height: 80, marginBottom: 10,}}>
-              <View style={{height: 24,}}>
-                <StatusBar barStyle = "light-content" hidden = {false} backgroundColor={'transparent'} translucent = {true}/>
-              </View>
-
-              <View style={{height: 56, flexDirection: 'row',}}>
-                <View style={{alignItems: 'center', justifyContent: 'center',}}>
-                  <TouchableOpacity onPress={() =>this.setState({showAddNote: false})}>
-                    <Icon name="arrow-back" style={{paddingLeft: 15, paddingRight: 25, color: '#ffffff'}} size={30} />
-                  </TouchableOpacity>
-                </View>
-
-                <View style={{alignItems:  'center', justifyContent: 'center',}}>
-                  <Text style={{textAlign: 'center', color: '#ffffff', fontSize: 20 }}>New Prescription</Text>
-                </View>
-              </View>
-            </LinearGradient>
-            <AddNote
-                onInputChange={input =>
-                    this.setState({
-                      newNote: input
-                    })
-                }
-                onSave={() => this.save()}
-            />
-          </View>
-      );
-    }
-
-    
-
     return (
       <View style={styles.main}>
         <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#263c91', '#6f82c6', '#d71a3a']} style={{height: 80,}}>
@@ -103,28 +51,18 @@ export default class DosageHistory extends Component {
         </LinearGradient>
 
         <View style={{flex: 1,}}>
-          <View style={{flex: 1,}}>
-            <ScrollView style={{flex: 1}}>
-              <Body
-                notesList={this.state.notes}
-                handleDelete={index => {
-                  let listOfNotes = this.state.notes;
-                  let newNotes = listOfNotes.filter((note, i) => i !== index);
-                  this.setState({
-                    notes: newNotes
-                  }, () => AsyncStorage.setItem("notes", JSON.stringify(newNotes)));
-                }} 
-              />
-            </ScrollView>  
-            <View style={{elevation: 8, position: 'absolute', alignItems: 'center', justifyContent: 'center', right: 5, bottom: 5, marginHorizontal: 10, marginVertical: 5,}}>
-              <TouchableOpacity onPress={() =>this.setState({showAddNote: true})} style={{height: 50, width: 50, borderRadius: 25, backgroundColor: '#00528e', justifyContent: 'center', alignItems: 'center',}}>
-                <Icon name="add" style={{paddingHorizontal: 15, paddingVertical: 15, color: '#ffffff'}} size={30} />
-              </TouchableOpacity>
+          <ImageBackground source={require('../../assests/logo.png')} style={{width: '100%', height: '100%', flex: 1}}>
+            <View style={{flex: 1, backgroundColor: 'rgba(255,255,255,0.5)',}}>
+              <ScrollView style={{flex: 1}}>
+                
+              </ScrollView>  
+              <View style={{elevation: 8, position: 'absolute', alignItems: 'center', justifyContent: 'center', right: 5, bottom: 5, marginHorizontal: 10, marginVertical: 5,}}>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate('Pres')} style={{height: 50, width: 50, borderRadius: 25, backgroundColor: '#00528e', justifyContent: 'center', alignItems: 'center',}}>
+                  <Icon name="add" style={{paddingHorizontal: 15, paddingVertical: 15, color: '#ffffff'}} size={30} />
+                </TouchableOpacity>
+              </View>
             </View>
-          </View>
-          <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#263c91', '#6f82c6', '#d71a3a']} style={{ width: '100%',}}>
-            <Text style={{color: '#ffffff', paddingVertical: 7, textAlign: 'center', fontSize: 16, fontStyle: 'italic' }}>CampusDoctor</Text>
-          </LinearGradient> 
+          </ImageBackground>  
         </View>  
       </View>
     );

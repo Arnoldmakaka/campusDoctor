@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Platform, AsyncStorage, StyleSheet, Text, View, StatusBar, KeyboardAvoidingView, Picker, TextInput, ScrollView, TouchableOpacity} from 'react-native';
+import {Platform, AsyncStorage, StyleSheet, Text, Image, View, StatusBar, KeyboardAvoidingView, Picker, TextInput, ScrollView, TouchableOpacity} from 'react-native';
 import {Icon} from 'native-base';
 import LinearGradient from 'react-native-linear-gradient';
 import DatePicker from 'react-native-datepicker';
@@ -15,7 +15,7 @@ export default class Body extends Component {
   render() {
     return (
       <View style={styles.list}>
-        {
+      {this.props.notesList.length !== 0 ? (
           this.props.notesList.map((note, i) => (
             <Note
               key={i}
@@ -24,10 +24,14 @@ export default class Body extends Component {
               handleDelete={index => {
                 this.props.handleDelete(index);
               }}
-              
+              displayNote={index => {
+                this.props.displayNote(index);
+              }}
             />
           ))
-        }
+        ) : (
+          <Image source={require('../../../assests/logo.png')} style={styles.img} />
+        )}
       </View>
     );
   }

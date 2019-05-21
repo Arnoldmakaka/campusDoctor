@@ -3,20 +3,39 @@ import {Platform, ImageBackground, StyleSheet, Share, Text, Modal, View, StatusB
 import {Icon} from 'native-base';
 import LinearGradient from 'react-native-linear-gradient';
 import SplashScreen from 'react-native-splash-screen';
+import firebase from 'react-native-firebase'
 
+import Dashboard from './Dashboard';
 
 export default class Welcomescreen extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      loading: true,
+    };
   }
 
   componentDidMount() {
       // do stuff while splash screen is shown
         // After having done stuff (such as async tasks) hide the splash screen
-        SplashScreen.hide();
+    this.authSubscription = firebase.auth().onAuthStateChanged((user) => {
+      this.setState({
+        loading: true,
+        user,
+      });
+    });
+    SplashScreen.hide();
+  }
+
+  componentWillUnmount() {
+    this.authSubscription();
   }
   
   render() {
+    if (this.state.user){
+        <Dashboard />
+      }
+
     return (
       <View style={{flex:1, backgroundColor: '#ffffff'}}>
         <View style={{flex: 2, justifyContent: 'center', alignItems: 'center',}}>

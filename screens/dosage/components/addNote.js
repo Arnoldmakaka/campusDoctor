@@ -7,8 +7,26 @@ var moment = require('moment')
 
 export default props => {
   state = {
-    date: new Date()
+    date: new Date(),
+    tablet: '',
   };
+
+  _doasageData = async () => {
+    var dosageData = {
+      tablet: this.state.tablet,
+      date: this.state.date
+    }
+    //alert(this.state.perioddate)
+      try {
+        await AsyncStorage.setItem('@key_dosage', JSON.stringify(dosageData));
+        {props.onSave}
+        console.log("Data saved")
+        //alert(typeof(this.state.perioddate))
+      } catch (error) {
+        alert("failed")
+      }
+    
+  }
 
   return (
     <View style={{flex: 1,}}>
@@ -17,7 +35,7 @@ export default props => {
           <View style={{flex: 1}}>
             <Text style={{fontSize: 16, fontStyle: 'normal', color: '#00528e', paddingVertical: 5, fontWeight: '700',}}>Drug Details</Text>
             <TextInput placeholder="Name of drug" onChangeText={props.onInputChange} style={{textAlign: 'left', color: '#00528e', height: 40, borderBottomColor: '#00528e', borderBottomWidth: 2, marginVertical: 7}}/>
-            <TextInput placeholder="Number of tablets/Injections" style={{textAlign: 'left', height: 40, color: '#00528e', borderBottomColor: '#00528e', borderBottomWidth: 2, marginVertical: 7}}/>
+            <TextInput onChangeText={(tablet)=>this.setState({tablet})} placeholder="Number of tablets/Injections" style={{textAlign: 'left', height: 40, color: '#00528e', borderBottomColor: '#00528e', borderBottomWidth: 2, marginVertical: 7}}/>
             <Text style={{fontSize: 16, fontStyle: 'normal', color: '#00528e', paddingVertical: 5, fontWeight: '700',}}>Time Details</Text>
             <Text style={{fontSize: 12, fontStyle: 'normal', color: '#00528e', paddingBottom: 5, fontWeight: '700',}}>Tap the date box to set reminder</Text>
             <DatePicker
@@ -51,16 +69,12 @@ export default props => {
           </View>
           
           <View style={{justifyContent: 'center', alignItems: 'flex-end', marginVertical: 25,}}>
-            <TouchableOpacity onPress={props.onSave} style={{height: 50, width: 50, borderRadius: 25, backgroundColor: '#00528e', justifyContent: 'center', alignItems: 'center',}}>
+            <TouchableOpacity onPress={()=>this._doasageData()} style={{height: 50, width: 50, borderRadius: 25, backgroundColor: '#00528e', justifyContent: 'center', alignItems: 'center',}}>
               <Icon name="checkmark" style={{paddingHorizontal: 15, paddingVertical: 15, color: '#ffffff'}} size={30} />
             </TouchableOpacity>
           </View> 
         </KeyboardAvoidingView>  
       </ScrollView> 
-
-      <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#263c91', '#6f82c6', '#d71a3a']} style={{ width: '100%',}}>
-        <Text style={{color: '#ffffff', paddingVertical: 7, textAlign: 'center', fontSize: 16, fontStyle: 'italic' }}>CampusDoctor</Text>
-      </LinearGradient>
 
     </View>
   );

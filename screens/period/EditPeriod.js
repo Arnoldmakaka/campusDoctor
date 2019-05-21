@@ -26,6 +26,7 @@ export default class EditPeriod extends Component {
         await AsyncStorage.setItem('@key_period', JSON.stringify(periodData));
         this.props.navigation.navigate('BottomNavigator')
         console.log("Data saved")
+        //alert(typeof(this.state.perioddate))
       } catch (error) {
         // Error saving data
       }

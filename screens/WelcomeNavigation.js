@@ -11,6 +11,7 @@ import WelcomeVerify from './WelcomeVerify';
 import Dashboard from './Dashboard';
 import Mychat from './chat/Mychat';
 import DosageHistory from './dosage/DosageHistory';
+import Prescription from './dosage/Prescription';
 import PeriodScreen from './period/PeriodScreen';
 import EditPeriod from './period/EditPeriod';
 import Profile from './period/Profile';
@@ -26,19 +27,20 @@ class WelcomeNavigation extends Component{
 export default WelcomeNavigation;
 
 const AppBottomNavigator = createMaterialBottomTabNavigator({  
-  Period: { screen: PeriodScreen,  
-          navigationOptions:{   
-            tabBarIcon: ({ tintColor }) => (  
-              <View>  
-                <Icon style={[{color: tintColor}]} size={25} name={'analytics'}/>  
-              </View>),  
-          }  
-        },  
-  Profile: { screen: Notebook,  
+  Calendar: { screen: PeriodScreen,
               navigationOptions:{   
                 tabBarIcon: ({ tintColor }) => (  
                   <View>  
-                    <Icon style={[{color: tintColor}]} size={25} name={'book'}/>  
+                    <Icon style={[{color: tintColor}]} size={30} name={'calendar'}/>  
+                  </View>),  
+                  
+              }   
+        },  
+  Notebook: { screen: Notebook,  
+              navigationOptions:{   
+                tabBarIcon: ({ tintColor }) => (  
+                  <View>  
+                    <Icon style={[{color: tintColor}]} size={30} name={'book'}/>  
                   </View>),  
                   
               }  
@@ -46,11 +48,11 @@ const AppBottomNavigator = createMaterialBottomTabNavigator({
     },  
     {  
       sifting: true,
-      initialRouteName: "Period",  
-      activeColor: '#263c91',  
+      initialRouteName: "Calendar",  
+      activeColor: '#f0edf6',  
       inactiveColor: '#f0edf6', 
-      labeled: false, 
-      barStyle: { backgroundColor: '#6f82c6' },  
+      labeled: true, 
+      barStyle: { backgroundColor: '#00528e' },  
     },  
 );
 
@@ -61,6 +63,7 @@ const AppSwitchNavigator = createSwitchNavigator({
 	Dash: {screen: Dashboard},
 	Chat: {screen: Mychat},
 	Dose: {screen: DosageHistory},
+  Pres: {screen: Prescription},
 	BottomNavigator: {screen: AppBottomNavigator},
 	Period: {screen: PeriodScreen},
 	Edit: {screen: EditPeriod},

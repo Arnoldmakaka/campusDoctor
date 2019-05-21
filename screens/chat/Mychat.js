@@ -28,7 +28,7 @@ export default class Mychat extends Component {
         </LinearGradient>
 
         <View style={{flex:1}}>
-          <Chatting />
+          
         </View> 
       </View>  
     );

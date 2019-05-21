@@ -1,7 +1,5 @@
 import React, {Component} from 'react'
-import {
-  YellowBox, ActivityIndicator
-} from 'react-native'
+import {YellowBox, ActivityIndicator} from 'react-native'
 import firebase from 'react-native-firebase'
 
 import {GiftedChat} from 'react-native-gifted-chat'

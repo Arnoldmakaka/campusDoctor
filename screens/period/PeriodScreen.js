@@ -5,8 +5,6 @@ import LinearGradient from 'react-native-linear-gradient';
 import { Calendar, CalendarList, Agenda} from 'react-native-calendars';
 var moment = require('moment')
 
-
-
 export default class PeriodScreen extends Component {
   constructor(){
     super()
@@ -14,17 +12,13 @@ export default class PeriodScreen extends Component {
       numofperiod: 0,
       lengthofperiod: '',
       perioddate: '',
+      periods: {},
     }
-
-
     //here we have to find a way to pass all dates we want to mark at once
     //since markedDates prop accepts an immutable object, which means you can't
     //change it over time or pass to it something from the state
-    this.periods = {
-      ...this.markDates(this.getSundaysInYear()),
-      //you can add the other markedperiods here
-      ...this.markedperiods()
-    }
+    //this.periods = {}
+    
   }
 
 
@@ -37,27 +31,17 @@ export default class PeriodScreen extends Component {
         numofperiod: periodData.numofperiod,
         lengthofperiod: periodData.lengthofperiod,
         perioddate: periodData.perioddate
+      }, async () => {
+        mp = await this.markedperiods()
+        this.setState({ periods:{
+      ...this.markDates(this.getSundaysInYear()),
+      //you can add the other markedperiods here
+      ...mp
+    }})
+    //alert(JSON.stringify(this.state.periods))
       })
-     //alert(this.state.perioddate)
-     //calling setState many times is very bad here
-     //better call it once like this
-     //this.setState({
-      // numofperiod: periodData.numofperiod,
-      // lengthofperiod: periodData.lengthofperiod,
-      // perioddate: periodData.perioddate
-    // })
     })
   }
-
-  //periods = () => {
-
-	      //periods[perioddatetwo] = {selected: true, endingDay: true, color: '#d71a3a', textColor: '#ffffff'}
-
-	   // }
-	//}
-
-  
-
   //this is the function (markDates) that gives us the dates to mark
   //the function that you needed should be similar to this
   //it's simple, it has to just return an object since
@@ -67,6 +51,7 @@ export default class PeriodScreen extends Component {
     for (let i in datesArray){
       markedDates[datesArray[i]] = {selected: true, textColor: '#d71a3a'}
     }
+    //alert(JSON.stringify(markedDates))
     return markedDates
   }
 
@@ -76,48 +61,49 @@ export default class PeriodScreen extends Component {
     let periods = {}
     // periods[this.state.perioddate] = {selected: true, color: '#d71a3a', textColor: '#ffffff'}
     // return periods
-
     //___START_____
-
-    let data = await AsyncStorage.getItem("@key_period")
-    let parsedData = JSON.parse(data)
+    // let data = await AsyncStorage.getItem("@key_period")
+    // let parsedData = JSON.parse(data)
     var array = [];
-
-    var last = +this.perioddate.split('-')[2];//28
-    var last_two = +this.perioddate.split('-')[2];//28
-    var mid = +this.perioddate.split('-')[1];//05
-    var mid_two = +this.perioddate.split('-')[1];//05
-    var first = +this.perioddate.split('-')[0];
+    let pickeddate = this.state.perioddate 
+    let pickednumber = this.state.numofperiod
+    //alert(pickeddate)
+    var last = +pickeddate.split('-')[2];//28
+    var last_two = +pickeddate.split('-')[2];//28
+    var mid = +pickeddate.split('-')[1];//05
+    var mid_two = +pickeddate.split('-')[1];//05
+    var first = +pickeddate.split('-')[0];
     var monthday = new Date(2019, mid, 0).getDate();//31
-    {
-      for(var i = 0; i < this.numofperiod; i++){
-        mid = mid + 0;//5
-        last = last_two;
-        last = last + i;//28
-        mid = mid_two;
-        if ( last > monthday){
-          mid++;
-          last = last - monthday;
-        }
-        var almost = `${this.perioddate.split('-')[0]}-`//2019
-        var almost_one = almost + mid;//2019-5
-        var almost_two = `${almost_one}-`
-        var almost_three = almost_two + last;//2019-05-28
-        array[i] = almost_three;
-        alert(array)
+    //alert(JSON.stringify({pickeddate, pickednumber, last, last_two, mid, mid_two, first, monthday}))
+    //alert(typeof(last))
+      array[0] = moment(pickeddate).format("YYYY-MM-DD")
+      for(var i = 1; i < pickednumber; i++){
+        // mid = mid + 0;//5
+        // last = last_two;
+        // last = last + i;//28
+        // mid = mid_two;
+        // if ( last > monthday){
+        //   mid++;
+        //   last = last - monthday;
+        // }
+        // var almost = `${pickeddate.split('-')[0]}-`//2019
+        // var almost_one = almost + mid;//2019-5
+        // var almost_two = `${almost_one}-`
+        // var almost_three = almost_two + last;//2019-05-28
+        // var modified = (moment(almost_three).format("YYYY-MM-DD"))
+        //alert(JSON.stringify({almost_three, modified}))
+        array[i] = moment(array[i-1]).add(1, "days").format("YYYY-MM-DD");
+        
       }
-    }
-    for (let u in array){
-      periods[array[u]] = {startingDay: true, color: '#d71a3a', textColor: '#ffffff'}
+    for (let u in array) {
+      periods[array[u]] = {disabled: true, startingDay: true, color: 'red', endingDay: true};
     }
     //here you write the code to get the list of dates to mark
     //it's more about making some calculation with the data from AsyncStorage
     //add the dates to the periods object
+    //alert(JSON.stringify(periods))
     return periods
-
     //_____END_______
-
-
   }
 
   getSundaysInMonth(year, month){
@@ -245,8 +231,7 @@ export default class PeriodScreen extends Component {
               pagingEnabled={true}
               // Set custom calendarWidth.
               calendarWidth={320}
-
-              markedDates={this.periods}
+              markedDates={this.state.periods}
               // Date marking style [simple/period/multi-dot/custom]. Default = 'simple'
               markingType={'period'}
 

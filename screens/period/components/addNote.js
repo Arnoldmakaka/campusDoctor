@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Platform, AsyncStorage, StyleSheet, Text, View, StatusBar, KeyboardAvoidingView, Picker, TextInput, ScrollView, TouchableOpacity} from 'react-native';
+import {Platform, AsyncStorage, StyleSheet, Text, View, StatusBar, Image, KeyboardAvoidingView, Picker, TextInput, ScrollView, TouchableOpacity} from 'react-native';
 import {Icon} from 'native-base';
 import LinearGradient from 'react-native-linear-gradient';
 import DatePicker from 'react-native-datepicker';
@@ -15,12 +15,12 @@ export default props => {
       <ScrollView style={{flex: 1}}>
         <KeyboardAvoidingView style={{flex: 1, marginHorizontal: 10,}} behavior="padding" enabled>
           <View style={{flex: 1}}>
-            <TextInput placeholder="My note" onChangeText={props.onInputChange} style={{textAlign: 'left', color: '#6f82c6', height: 40, borderBottomColor: '#6f82c6', borderBottomWidth: 2, marginVertical: 7}}/>
+            <TextInput placeholder="My note" onChangeText={props.onInputChange} style={{textAlign: 'left', color: '#00528e', height: 40, borderBottomColor: '#00528e', borderBottomWidth: 2, marginVertical: 7}}/>
             
           </View>
           
           <View style={{justifyContent: 'center', alignItems: 'flex-end', marginVertical: 25,}}>
-            <TouchableOpacity onPress={props.onSave} style={{height: 50, width: 50, borderRadius: 25, backgroundColor: '#6f82c6', justifyContent: 'center', alignItems: 'center',}}>
+            <TouchableOpacity onPress={props.onSave} style={{height: 50, width: 50, borderRadius: 25, backgroundColor: '#00528e', justifyContent: 'center', alignItems: 'center',}}>
               <Icon name="checkmark" style={{paddingHorizontal: 15, paddingVertical: 15, color: '#ffffff'}} size={30} />
             </TouchableOpacity>
           </View> 
