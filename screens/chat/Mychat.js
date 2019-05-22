@@ -3,7 +3,6 @@ import {Platform, StyleSheet, Text, ImageBackground, View, StatusBar, KeyboardAv
 import {Icon} from 'native-base';
 import LinearGradient from 'react-native-linear-gradient';
 
-import Chatting from './Chatting';
 import ChatViews from './components/ChatViews';
 
 export default class Mychat extends Component {

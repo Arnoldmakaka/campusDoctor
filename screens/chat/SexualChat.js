@@ -2,12 +2,14 @@ import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, StatusBar, KeyboardAvoidingView, Picker, TextInput, ScrollView, TouchableOpacity} from 'react-native';
 import {Icon} from 'native-base';
 import LinearGradient from 'react-native-linear-gradient';
+import {GiftedChat} from 'react-native-gifted-chat';
+import firebase from 'react-native-firebase';
 
-import Chatting from './Chatting';
+import SexualChatting from './SexualChatting';
 
 export default class SexualChat extends Component {
 	render() {
-    	return (
+		return (
     		<View style={{flex: 1}}>
 		        <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#263c91', '#6f82c6', '#d71a3a']} style={{height: 80, marginBottom: 10,}}>
 		          <View style={{height: 24,}}>
@@ -22,10 +24,16 @@ export default class SexualChat extends Component {
 		            </View>
 
 		            <View style={{alignItems:  'center', justifyContent: 'center',}}>
-		              <Text style={{textAlign: 'center', color: '#ffffff', fontSize: 20 }}>Sexual Health Doctor</Text>
+		              <Text style={{textAlign: 'center', color: '#ffffff', fontSize: 20 }}>Sexual Doctor</Text>
 		            </View>
 		          </View>
 		        </LinearGradient>
+
+		        <View style={{flex: 1,}}>
+		        	
+		        			<SexualChatting />
+		        		
+		        </View>
 
 		    </View>    
     	);

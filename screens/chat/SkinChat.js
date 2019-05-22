@@ -2,12 +2,14 @@ import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, StatusBar, KeyboardAvoidingView, Picker, TextInput, ScrollView, TouchableOpacity} from 'react-native';
 import {Icon} from 'native-base';
 import LinearGradient from 'react-native-linear-gradient';
+import {GiftedChat} from 'react-native-gifted-chat';
+import firebase from 'react-native-firebase';
 
-import Chatting from './Chatting';
+import SkinChatting from './SkinChatting';
 
 export default class SkinChat extends Component {
 	render() {
-    	return (
+		return (
     		<View style={{flex: 1}}>
 		        <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#263c91', '#6f82c6', '#d71a3a']} style={{height: 80, marginBottom: 10,}}>
 		          <View style={{height: 24,}}>
@@ -26,6 +28,12 @@ export default class SkinChat extends Component {
 		            </View>
 		          </View>
 		        </LinearGradient>
+
+		        <View style={{flex: 1,}}>
+		        	
+		        	<SkinChatting />
+		        		
+		        </View>
 
 		    </View>    
     	);

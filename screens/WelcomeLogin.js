@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, Alert, View, StatusBar, AsyncStorage, KeyboardAvoidingView, Picker, TextInput, ScrollView, TouchableOpacity} from 'react-native';
 import {Icon} from 'native-base';
 import LinearGradient from 'react-native-linear-gradient';
-import firebase from 'react-native-firebase'
+import firebase from 'react-native-firebase';
 
 export default class WelcomeLogin extends Component {
   constructor(props) {
@@ -21,40 +21,43 @@ export default class WelcomeLogin extends Component {
   _loginData = () => {
     const {sex, college, name, email, pno} = this.state
       //if (this.state.email != '' && this.state.pno != '' && this.state.name != ''){
-        //firebase.auth().signInWithPhoneNumber(pno)
-        //.then((confirmResult) => {
-              //this.setState({ confirmResult });
-              //this.gaiish()
-              this.props.navigation.navigate('Verify')
-          // }).catch((error) => {
-            //const { code, message } = error;
+        firebase.auth().signInWithPhoneNumber(pno)
+        .then((confirmResult) => {
+          firebase.database().ref('UserList').push({
+            Sex: sex,
+            Email: email,
+            College: college,
+            Name: name,
+            PhoneNumber: pno
+              })
+              //
+              //alert(confirmResult)
+              this.onVerify(confirmResult)
+           }).catch((error) => {
+            const { code, message } = error;
+            alert(message)
             //Alert.alert('Error Occured', 'Please try again later')
             // For details of error codes, see the docs
             // The message contains the default Firebase string
             // representation of the error
-          //});  
+          });  
     //}
     //else{
       //Alert.alert('Missing Fields', 'Please fill in all the required fields');
     //}
   }
   
-  gaiish = async () => {
+  onVerify = async (confirmResult) => {
+    const {name} = this.state
     var loginData = {
-      confirmResult: this.state.confirmResult
+      confirmResult: confirmResult,
+      name: this.state.name
     }
     try {
       await AsyncStorage.setItem('@key_login', JSON.stringify(loginData));
-        firebase.database().ref('UserList').push({
-          Sex: sex,
-          Email: email,
-          College: college,
-          Name: name,
-          PhoneNumber: pno
-        })
-        alert("Data saved")
+        this.props.navigation.navigate('Verify')
       }catch (error) {
-        alert("failed")
+        Alert.alert("Network Error", "Please try again later")
       }
   }
 

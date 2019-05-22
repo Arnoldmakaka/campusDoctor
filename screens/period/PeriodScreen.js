@@ -118,8 +118,9 @@ export default class PeriodScreen extends Component {
     for (let i=1; i<=new Date(year, month, 0).getDate(); i++){
       let date = new Date(year, month-1, i)
       if (date.getDay() == 0)
-        sundays.push(moment(date).format("YYYY-MM-D"))
+        sundays.push(moment(date).format("YYYY-MM-DD"))
     }
+    alert(JSON.stringify(sundays))
     return sundays
   }
 
