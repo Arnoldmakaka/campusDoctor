@@ -5,98 +5,89 @@ import LinearGradient from 'react-native-linear-gradient';
 import DatePicker from 'react-native-datepicker';
 var moment = require('moment')
 
-import Header from "./components/header";
-import Body from "./components/body";
-import AddNote from "./components/addNote";
-import NoteDetail from "./components/noteDetail";
+import Note from './components/Note';
 
 export default class DosageHistory extends Component {
-  state = {
-    notes: [],
-    showAddNote: false,
-    newNote: "",
-    showNoteDetail: false,
-    currentNote: "",
-  };
-
-  loadNotes = async () => {
-    try {
-      let storedNotes = await AsyncStorage.getItem("notes");
-      if(storedNotes)
-        this.setState({notes: JSON.parse(storedNotes)});
-    }catch (e) {
-      console.log(e)
-      alert(e);
+  constructor(){
+    super()
+    this.state = {
+      dosageData: ["first_id"],
     }
-  };
+  }
 
   componentDidMount(){
-    this.loadNotes();
+    //console.log('componentDidMount')
+    AsyncStorage.getItem("@dosagehistory").then((r)=>{
+    	var dosageData = JSON.parse(r)
+    	if (dosageData == null) {
+          this.setState({dosageData: []})
+        }
+        else{
+          this.setState({dosageData}) 
+        }  
+    	
+    })
   }
 
-  save() {
-    let listOfNotes = this.state.notes;
-    let noteToAdd = this.state.newNote;
-    let numberToAdd = this.state.newdate;
-    let dateToAdd = this.state.newnumber;
-    listOfNotes.unshift(noteToAdd);
-    listOfdates.unshift(dateToAdd);
-    listOfnumbers.unshift(numberToAdd);
-    this.setState({
-      notes: listOfNotes,
-      dates: listOfdates,
-      numbers: listOfnumbers,
-      showAddNote: false
-    });
-    AsyncStorage.setItem("notes", JSON.stringify(listOfNotes));
-    AsyncStorage.setItem("numbers", JSON.stringify(listOfnumbers));
-    AsyncStorage.setItem("dates", JSON.stringify(listOfdates));
+  _deletedosage = (j) => {
+  	var dosageData = this.state.dosageData
+  	dosageData.splice(j,1)
+  	this.setState({dosageData})
+  	AsyncStorage.setItem('@dosagehistory', JSON.stringify(dosageData))
   }
+
+  _dosagelist = () => {
+    var dosagelist = this.state.dosageData
+    return dosagelist.map((i,j) => (
+    	<View key={i} style={{marginHorizontal: 10, paddingVertical: 5,}}>
+    		<View style={{flexDirection: 'row', justifyContent: 'space-between', borderColor: '#00528e', borderRadius: 4, borderWidth: 2,}}>
+				<View style={{flex: 1, paddingHorizontal: 10, paddingVertical: 5,}}>
+
+			        <View style={{flexDirection: 'row', paddingTop: 5, paddingBottom: 3, alignItems: 'center',}}>
+			          <TouchableOpacity onPress={()=>this._deletedosage(j)} style={{height: 24, width: 24, backgroundColor: '#00528e', justifyContent: 'center', alignItems: 'center',
+			          borderColor: '#00528e', borderRadius: 4, borderWidth: 1,}}>
+			            <Text style={{textAlign: 'center', color: '#ffffff', fontSize: 12, paddingHorizontal: 2,}}>Delete</Text>
+			          </TouchableOpacity>
+			        </View>
+        
+			        <View style={{flexDirection: 'row', paddingBottom: 3,}}>
+			          <View>
+			            <Text style={{ fontSize: 14, color: '#000000', fontWeight: '400',}}>Dose Name: </Text>
+			          </View>
+			          <View>  
+			            <Text style={{ fontSize: 14, color: '#00528e', fontStyle: 'italic', }}>{i.drug}</Text>
+			          </View>
+			        </View>
+
+			        <View style={{flexDirection: 'row', paddingBottom: 3,}}>
+			          <View>
+			            <Text style={{ fontSize: 14, color: '#000000', fontWeight: '400',}}>Tablets/Injections: </Text>
+			          </View>
+			          <View>  
+			            <Text style={{ fontSize: 14, color: '#00528e', fontStyle: 'italic', }}>{i.tab}</Text>
+			          </View>
+			        </View>
+
+			        <View style={{flexDirection: 'row',}}>
+			          <View>
+			            <Text style={{ fontSize: 14, color: '#000000', fontWeight: '400',}}>Reminder set on: </Text>
+			          </View>
+			          <View>  
+			            <Text style={{ fontSize: 14, color: '#00528e', fontStyle: 'italic', }}>{i.date}</Text>
+			          </View>
+			        </View>
+
+      			</View>  
+			</View>
+  		</View>    
+      )
+    )
+  }
+
+
 
   render() {
-    Component;
-    if (this.state.showAddNote) {
-      return (
-          <View style={styles.main}>
-            <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#263c91', '#6f82c6', '#d71a3a']} style={{height: 80, marginBottom: 10,}}>
-              <View style={{height: 24,}}>
-                <StatusBar barStyle = "light-content" hidden = {false} backgroundColor={'transparent'} translucent = {true}/>
-              </View>
-
-              <View style={{height: 56, flexDirection: 'row',}}>
-                <View style={{alignItems: 'center', justifyContent: 'center',}}>
-                  <TouchableOpacity onPress={() =>this.setState({showAddNote: false})}>
-                    <Icon name="arrow-back" style={{paddingLeft: 15, paddingRight: 25, color: '#ffffff'}} size={30} />
-                  </TouchableOpacity>
-                </View>
-
-                <View style={{alignItems:  'center', justifyContent: 'center',}}>
-                  <Text style={{textAlign: 'center', color: '#ffffff', fontSize: 20 }}>Prescription</Text>
-                </View>
-              </View>
-            </LinearGradient>
-            <AddNote
-                onInputChange={input =>
-                    this.setState({
-                      newNote: input
-                    })
-                }
-                onInputdate={input =>
-                    this.setState({
-                      newdate: input
-                    })
-                }
-                onInputnumber={input =>
-                    this.setState({
-                      newnumber: input
-                    })
-                }
-                onSave={() => this.save()}
-            />
-          </View>
-      );
-    }
-
+  	let {date, tab, drug} = this.state
     return (
       <View style={styles.main}>
         <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#263c91', '#6f82c6', '#d71a3a']} style={{height: 80,}}>
@@ -121,19 +112,10 @@ export default class DosageHistory extends Component {
           <ImageBackground source={require('../../assests/logo.png')} style={{width: '100%', height: '100%', flex: 1}}>
             <View style={{flex: 1, backgroundColor: 'rgba(255,255,255,0.5)',}}>
               <ScrollView style={{flex: 1}}>
-                <Body
-                notesList={this.state.notes}
-                handleDelete={index => {
-                  let listOfNotes = this.state.notes;
-                  let newNotes = listOfNotes.filter((note, i) => i !== index);
-                  this.setState({
-                    notes: newNotes
-                  }, () => AsyncStorage.setItem("notes", JSON.stringify(newNotes)));
-                }}
-              />
+                {this._dosagelist()}
               </ScrollView>  
               <View style={{elevation: 8, position: 'absolute', alignItems: 'center', justifyContent: 'center', right: 5, bottom: 5, marginHorizontal: 10, marginVertical: 5,}}>
-                <TouchableOpacity style={{height: 50, width: 50, borderRadius: 25, backgroundColor: '#00528e', justifyContent: 'center', alignItems: 'center',}}>
+                <TouchableOpacity onPress={() => this.props.navigation.navigate('Pres')} style={{height: 50, width: 50, borderRadius: 25, backgroundColor: '#00528e', justifyContent: 'center', alignItems: 'center',}}>
                   <Icon name="add" style={{paddingHorizontal: 15, paddingVertical: 15, color: '#ffffff'}} size={30} />
                 </TouchableOpacity>
               </View>

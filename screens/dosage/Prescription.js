@@ -25,12 +25,25 @@ export default class Prescription extends Component {
         drug: this.state.drug
       }
       try {
-        await AsyncStorage.setItem('@key_dosage', JSON.stringify(dosageData));
-          this.props.navigation.navigate('Dose')
-          //alert(JSON.stringify(this.state.tab))
-          //alert(typeof(this.state.perioddate))
-        }catch (error) {
-        //alert("failed")
+        //get dosage HIst from async
+        var dosagehistory = await AsyncStorage.getItem('@dosagehistory');
+        if (dosagehistory == null) {
+          //update dosage hist to an empty array and add the first dosage
+          dosagehistory =  [];
+          dosagehistory.push(dosageData) 
+        }
+        else{
+          //since we there is already some dosage history but stringified
+          //lets parse and update dosage hist
+          dosagehistory = JSON.parse(dosagehistory)
+          //add the new dosage
+          dosagehistory.push(dosageData)  
+        }  
+        // save dosage history to async
+        await AsyncStorage.setItem('@dosagehistory', JSON.stringify(dosagehistory));
+        this.props.navigation.navigate('Dose')
+      }catch (error) {
+        alert("failed")
         }
     } 
     else{Alert.alert('Missing Fields', 'Please fill in all the required fields');}
