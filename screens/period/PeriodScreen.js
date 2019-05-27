@@ -120,7 +120,7 @@ export default class PeriodScreen extends Component {
       if (date.getDay() == 0)
         sundays.push(moment(date).format("YYYY-MM-DD"))
     }
-    alert(JSON.stringify(sundays))
+    //alert(JSON.stringify(sundays))
     return sundays
   }
 
@@ -171,7 +171,7 @@ export default class PeriodScreen extends Component {
           </View>
         </LinearGradient>
 
-        <View style={{flex:1,}}>
+        <View style={{flex:1, backgroundColor: '#e9ebee'}}>
 
           <View style={{borderBottomColor: '#6f82c6', borderBottomWidth: 2, marginVertical: 10, }}>
             <View style={{flexDirection: 'row', paddingHorizontal: 10, justifyContent: 'space-between',}}>
@@ -239,8 +239,8 @@ export default class PeriodScreen extends Component {
 
               // Specify theme properties to override specific styles for calendar parts. Default = {}
               theme={{
-                backgroundColor: '#ffffff',
-                calendarBackground: '#ffffff',
+                backgroundColor: '#e9ebee',
+                calendarBackground: '#e9ebee',
                 textSectionTitleColor: '#00528e',
                 selectedDayBackgroundColor: '#00528e',
                 selectedDayTextColor: '#ffffff',
@@ -272,11 +272,11 @@ export default class PeriodScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#e9ebee',
   },
   modal: {
     flex: 1,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#e9ebee',
     borderTopColor: '#00528e',
     borderTopWidth: 2,
   },

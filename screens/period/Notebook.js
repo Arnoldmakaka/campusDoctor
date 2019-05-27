@@ -5,7 +5,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import DatePicker from 'react-native-datepicker';
 var moment = require('moment')
 
-import Header from "./components/header";
+
 import Body from "./components/body";
 import AddNote from "./components/addNote";
 import NoteDetail from "./components/noteDetail";
@@ -52,7 +52,7 @@ export default class Notebook extends Component {
     if (this.state.showAddNote) {
       return (
           <View style={styles.main}>
-            <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#263c91', '#6f82c6', '#d71a3a']} style={{height: 80, marginBottom: 10,}}>
+            <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#263c91', '#6f82c6', '#d71a3a']} style={{height: 80,}}>
               <View style={{height: 24,}}>
                 <StatusBar barStyle = "light-content" hidden = {false} backgroundColor={'transparent'} translucent = {true}/>
               </View>
@@ -84,7 +84,7 @@ export default class Notebook extends Component {
     if (this.state.showNoteDetail) {
       return (
           <View style={styles.main}>
-            <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#263c91', '#6f82c6', '#d71a3a']} style={{height: 80, marginBottom: 10,}}>
+            <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#263c91', '#6f82c6', '#d71a3a']} style={{height: 80,}}>
               <View style={{height: 24,}}>
                 <StatusBar barStyle = "light-content" hidden = {false} backgroundColor={'transparent'} translucent = {true}/>
               </View>
@@ -107,27 +107,27 @@ export default class Notebook extends Component {
 
     return (
       <View style={styles.main}>
-        <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#263c91', '#6f82c6', '#d71a3a']} style={{height: 80, marginBottom: 10,}}>
-          <View style={{height: 24,}}>
-            <StatusBar barStyle = "light-content" hidden = {false} backgroundColor={'transparent'} translucent = {true}/>
-          </View>
+        <ImageBackground source={require('../../assests/14.png')} style={{width: '100%', height: '100%', flex: 1}}>
+          <View style={{flex: 1, backgroundColor: 'rgba(255,255,255,0.5)'}}>
+            <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#263c91', '#6f82c6', '#d71a3a']} style={{height: 80,}}>
+              <View style={{height: 24,}}>
+                <StatusBar barStyle = "light-content" hidden = {false} backgroundColor={'transparent'} translucent = {true}/>
+              </View>
 
-          <View style={{height: 56, flexDirection: 'row',}}>
-            <View style={{alignItems: 'center', justifyContent: 'center',}}>
-              <TouchableOpacity onPress={() => this.props.navigation.navigate('Dash')}>
-                <Icon name="arrow-back" style={{paddingLeft: 15, paddingRight: 25, color: '#ffffff'}} size={30} />
-              </TouchableOpacity>
-            </View>
+              <View style={{height: 56, flexDirection: 'row',}}>
+                <View style={{alignItems: 'center', justifyContent: 'center',}}>
+                  <TouchableOpacity onPress={() => this.props.navigation.navigate('Dash')}>
+                    <Icon name="arrow-back" style={{paddingLeft: 15, paddingRight: 25, color: '#ffffff'}} size={30} />
+                  </TouchableOpacity>
+                </View>
 
-            <View style={{alignItems:  'center', justifyContent: 'center',}}>
-              <Text style={{textAlign: 'center', color: '#ffffff', fontSize: 20 }}>Notebook</Text>
-            </View>
-          </View>
-        </LinearGradient>
+                <View style={{alignItems:  'center', justifyContent: 'center',}}>
+                  <Text style={{textAlign: 'center', color: '#ffffff', fontSize: 20 }}>Notebook</Text>
+                </View>
+              </View>
+            </LinearGradient>
 
-        <View style={{flex:1,}}>
-          <ImageBackground source={require('../../assests/logo.png')} style={{width: '100%', height: '100%', flex: 1}}>
-            <View style={{flex: 1, backgroundColor: 'rgba(255,255,255,0.5)',}}>
+            <View style={{flex:1,}}>
               <Body
                 notesList={this.state.notes}
                 handleDelete={index => {
@@ -144,23 +144,24 @@ export default class Notebook extends Component {
                     showNoteDetail: true
                   });
                 }}
-              />
+              />  
             </View>
-          </ImageBackground>
-        </View>
-            
-          <View style={{justifyContent: 'flex-end', marginHorizontal: 10, alignItems: 'flex-end', marginVertical: 15,}}>
-            <TouchableOpacity onPress={() =>this.setState({showAddNote: true})} style={{height: 50, width: 50, borderRadius: 25, backgroundColor: '#00528e', justifyContent: 'center', alignItems: 'center',}}>
-              <Icon name="add" style={{paddingHorizontal: 15, paddingVertical: 15, color: '#ffffff'}} size={30} />
-            </TouchableOpacity>
-          </View>
-        </View>
+
+            <View style={{justifyContent: 'flex-end', marginHorizontal: 10, alignItems: 'flex-end', marginVertical: 15,}}>
+              <TouchableOpacity onPress={() =>this.setState({showAddNote: true})} style={{height: 50, width: 50, borderRadius: 25, backgroundColor: '#00528e', justifyContent: 'center', alignItems: 'center',}}>
+                <Icon name="add" style={{paddingHorizontal: 15, paddingVertical: 15, color: '#ffffff'}} size={30} />
+              </TouchableOpacity>
+            </View>
+          </View>  
+        </ImageBackground>
+      </View>
     );
   }
 }
 const styles = StyleSheet.create({
   main: {
-    flex: 1
+    flex: 1,
+    backgroundColor: '#e9ebee'
   },
   btn: {
     position: "absolute",

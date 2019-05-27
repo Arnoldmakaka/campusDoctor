@@ -5,7 +5,7 @@ export default props => {
   return (
     <View style={{height: 140, width: '90%', borderColor: '#00528e', borderRadius: 4, borderWidth: 2, paddingHorizontal: 7, paddingVertical: 7}}>
       <View style={{flex: 1, paddingVertical: 10, justifyContent: 'center', alignItems: 'center',}}>
-        <Image style={{height:80, width:80}} source={props.imageUri} />
+        <Image style={{height:'100%', width:'100%'}} source={props.imageUri} />
       </View>
 
       <View style={{paddingTop: 5, justifyContent: 'center', alignItems: 'center',}}>

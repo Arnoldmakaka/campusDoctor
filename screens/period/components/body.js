@@ -30,7 +30,7 @@ export default class Body extends Component {
             />
           ))
         ) : (
-          <Image source={require('../../../assests/logo.png')} style={styles.img} />
+            <Text></Text>
         )}
       </View>
     );

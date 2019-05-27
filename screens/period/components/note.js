@@ -12,8 +12,8 @@ let shortenText = text => {
 };
 
 export default props => (
-  <View style={{marginHorizontal: 10,}}>
-    <View style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: 12, borderColor: '#00528e', borderRadius: 4, borderWidth: 2,}}>
+  <View style={{marginHorizontal: 10, marginTop: 5,}}>
+    <View style={{flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10, borderColor: '#00528e', borderRadius: 4, borderWidth: 2,}}>
 
       <View style={{flex: 1, paddingHorizontal: 10, paddingVertical: 5,}}>
 

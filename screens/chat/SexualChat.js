@@ -10,7 +10,7 @@ import SexualChatting from './SexualChatting';
 export default class SexualChat extends Component {
 	render() {
 		return (
-    		<View style={{flex: 1}}>
+    		<View style={{flex: 1, backgroundColor: '#e9ebee'}}>
 		        <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#263c91', '#6f82c6', '#d71a3a']} style={{height: 80, marginBottom: 10,}}>
 		          <View style={{height: 24,}}>
 		            <StatusBar barStyle = "light-content" hidden = {false} backgroundColor={'transparent'} translucent = {true}/>
@@ -29,7 +29,7 @@ export default class SexualChat extends Component {
 		          </View>
 		        </LinearGradient>
 
-		        <View style={{flex: 1,}}>
+		        <View style={{flex: 1, backgroundColor: '#e9ebee'}}>
 		        	
 		        			<SexualChatting />
 		        		

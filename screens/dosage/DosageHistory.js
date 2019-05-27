@@ -5,7 +5,6 @@ import LinearGradient from 'react-native-linear-gradient';
 import DatePicker from 'react-native-datepicker';
 var moment = require('moment')
 
-import Note from './components/Note';
 
 export default class DosageHistory extends Component {
   constructor(){
@@ -41,12 +40,12 @@ export default class DosageHistory extends Component {
     return dosagelist.map((i,j) => (
     	<View key={i} style={{marginHorizontal: 10, paddingVertical: 5,}}>
     		<View style={{flexDirection: 'row', justifyContent: 'space-between', borderColor: '#00528e', borderRadius: 4, borderWidth: 2,}}>
-				<View style={{flex: 1, paddingHorizontal: 10, paddingVertical: 5,}}>
+				<View style={{flex: 1, paddingHorizontal: 10, paddingVertical: 10,}}>
 
-			        <View style={{flexDirection: 'row', paddingTop: 5, paddingBottom: 3, alignItems: 'center',}}>
-			          <TouchableOpacity onPress={()=>this._deletedosage(j)} style={{height: 24, width: 24, backgroundColor: '#00528e', justifyContent: 'center', alignItems: 'center',
+			        <View style={{flexDirection: 'row', paddingTop: 3, paddingBottom: 3, alignItems: 'center',}}>
+			          <TouchableOpacity onPress={()=>this._deletedosage(j)} style={{height: 30, width: 60, backgroundColor: '#00528e', justifyContent: 'center', alignItems: 'center',
 			          borderColor: '#00528e', borderRadius: 4, borderWidth: 1,}}>
-			            <Text style={{textAlign: 'center', color: '#ffffff', fontSize: 12, paddingHorizontal: 2,}}>Delete</Text>
+			            <Text style={{textAlign: 'center', color: '#ffffff', fontSize: 12, paddingHorizontal: 10,}}>Delete</Text>
 			          </TouchableOpacity>
 			        </View>
         
@@ -108,9 +107,9 @@ export default class DosageHistory extends Component {
           </View>
         </LinearGradient>
 
-        <View style={{flex: 1,}}>
-          <ImageBackground source={require('../../assests/logo.png')} style={{width: '100%', height: '100%', flex: 1}}>
-            <View style={{flex: 1, backgroundColor: 'rgba(255,255,255,0.5)',}}>
+        <View style={{flex: 1, backgroundColor: '#e9ebee'}}>
+          
+            <View style={{flex: 1,}}>
               <ScrollView style={{flex: 1}}>
                 {this._dosagelist()}
               </ScrollView>  
@@ -120,7 +119,7 @@ export default class DosageHistory extends Component {
                 </TouchableOpacity>
               </View>
             </View>
-          </ImageBackground>  
+  
         </View>  
       </View>
     );
@@ -128,7 +127,8 @@ export default class DosageHistory extends Component {
 }
 const styles = StyleSheet.create({
   main: {
-    flex: 1
+    flex: 1,
+    backgroundColor: '#e9ebee'
   },
   btn: {
     position: "absolute",

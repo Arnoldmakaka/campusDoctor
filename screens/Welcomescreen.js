@@ -3,7 +3,7 @@ import {Platform, ImageBackground, StyleSheet, Share, Text, Modal, View, StatusB
 import {Icon} from 'native-base';
 import LinearGradient from 'react-native-linear-gradient';
 import SplashScreen from 'react-native-splash-screen';
-import firebase from 'react-native-firebase'
+import firebase from 'react-native-firebase';
 
 import Dashboard from './Dashboard';
 

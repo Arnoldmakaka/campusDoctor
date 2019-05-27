@@ -4,6 +4,8 @@ import {Icon} from 'native-base';
 import LinearGradient from 'react-native-linear-gradient';
 import DashboardViews from './components/DashboardViews';
 import firebase from 'react-native-firebase';
+import SplashScreen from 'react-native-splash-screen';
+
 
 export default class Dashboard extends Component {
   state = {
@@ -17,6 +19,10 @@ export default class Dashboard extends Component {
     message: ''
   }
 
+   componentDidMount() {
+    SplashScreen.hide();
+  }
+  
   _storeData() {
     const {message, mobilenumber, email, fullname, doctor} = this.state
     if (this.state.message != '' && this.state.mobilenumber != '' && this.state.email != '' && this.state.fullname != '' && this.state.doctor != ''){
@@ -68,7 +74,7 @@ export default class Dashboard extends Component {
     let {label, imageUri, doctor, fullname, email, mobilenumber, message} = this.state
     
     return (
-      <View style={{flex: 1}}>
+      <View style={{flex: 1, backgroundColor: '#e9ebee'}}>
 
         <LinearGradient start={{x: 0, y: 0}} end={{x: 1, y: 0}} colors={['#263c91', '#6f82c6', '#d71a3a']} style={{height: 80, marginBottom: 10,}}>
           <View style={{height: 24,}}>
@@ -83,18 +89,18 @@ export default class Dashboard extends Component {
         
         </LinearGradient>
 
-        <View style={{flex: 1, backgroundColor: '#ffffff'}}>
+        <View style={{flex: 1, backgroundColor: '#e9ebee'}}>
           <View style={{flex: 1, marginHorizontal: 10, alignItems: 'center', justifyContent:'center',}}>
             <View style={{flex: 1,flexDirection: 'row', alignItems: 'center',  marginTop: 7, marginBottom: 7, justifyContent: 'space-between',}}>
               <TouchableOpacity onPress={() => this.props.navigation.navigate('Chat')} style={{flex: 1, justifyContent: 'space-between', alignItems: 'center',}}>
-                <DashboardViews imageUri={require('../assests/doctor.png')} label = "Chat with Doctor"/>
+                <DashboardViews imageUri={require('../assests/7.png')} label = "Chat with Doctor"/>
               </TouchableOpacity>
               
               <TouchableOpacity onPress = {() => {this.toggleModal(true)}} style={{flex: 1, justifyContent: 'space-between', alignItems: 'center',}}>
-                <DashboardViews imageUri={require('../assests/appointment.png')} label = "Make Appointment"/>
+                <DashboardViews imageUri={require('../assests/1.png')} label = "Make Appointment"/>
               </TouchableOpacity>
               
-              <View style={{alignItems: 'flex-start', justifyContent:'flex-start',}}>
+              <View style={{alignItems: 'flex-start', justifyContent:'flex-start', backgroundColor: '#e9ebee'}}>
                 <Modal animationType = {"slide"} transparent = {true} visible = {this.state.modalVisible} onRequestClose = {() => { console.log("Modal has been closed.") } }>
                 	<View style = {styles.modal}>
                     <Text style={{textAlign: 'center', fontSize: 20, color: '#00528e', fontWeight: 'bold', marginVertical: 10}}>APPOINTMENT FORM</Text>
@@ -145,21 +151,21 @@ export default class Dashboard extends Component {
 
             <View style={{flexDirection: 'row', alignItems: 'center',  marginVertical: 7, justifyContent: 'space-between',}}>
               <TouchableOpacity onPress={() => this.props.navigation.navigate('Dose')} style={{flex: 1, justifyContent: 'space-between', alignItems: 'center',}}>
-                <DashboardViews imageUri={require('../assests/medicine.png')} label = "Dosage Reminder"/>
+                <DashboardViews imageUri={require('../assests/8.png')} label = "Dosage Reminder"/>
               </TouchableOpacity>
               
               <TouchableOpacity onPress={() => this.props.navigation.navigate('BottomNavigator')} style={{flex: 1, justifyContent: 'space-between', alignItems: 'center',}}>
-                <DashboardViews imageUri={require('../assests/compress.png')} label = "Period Tracker"/>
+                <DashboardViews imageUri={require('../assests/6.png')} label = "Period Tracker"/>
               </TouchableOpacity>
             </View>
 
             <View style={{flexDirection: 'row', alignItems: 'center', marginBottom: 7, justifyContent: 'space-between',}}>
               <TouchableOpacity style={{flex: 1, justifyContent: 'space-between', alignItems: 'center',}} onPress={this.onShare} >
-                <DashboardViews imageUri={require('../assests/network.png')} label = "Share With Friends"/>
+                <DashboardViews imageUri={require('../assests/11.png')} label = "Share With Friends"/>
               </TouchableOpacity>
 
               <TouchableOpacity style={{flex: 1, justifyContent: 'space-between', alignItems: 'center',}} onPress={ () => Linking.openURL('https://www.thecampusdoc.com')}>
-                <DashboardViews imageUri={require('../assests/more.png')} label = "More"/>
+                <DashboardViews imageUri={require('../assests/10.png')} label = "More"/>
               </TouchableOpacity>
             </View>
 
@@ -178,7 +184,7 @@ const styles = StyleSheet.create({
 	modal: {
       flex: 1,
       alignItems: 'center', 
-      backgroundColor: '#ffffff',
+      backgroundColor: '#e9ebee',
       borderTopColor: '#00528e',
       borderTopWidth: 2,
    },
@@ -187,10 +193,9 @@ const styles = StyleSheet.create({
       height: 120,
       justifyContent: 'flex-start', 
       alignContent: 'flex-start', 
-      marginVertical: 7,
       borderWidth: 2,
       borderColor: '#00528e',
       borderRadius: 4,
-      backgroundColor : "#ffffff",
+      backgroundColor: '#e9ebee',
     },
 });
