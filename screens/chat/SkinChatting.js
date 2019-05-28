@@ -10,7 +10,8 @@ YellowBox.ignoreWarnings(['Warning: componentWill'])
 class SkinChatting extends Component{
   state = {
     isAuthenticated: true,
-    messages: []
+    messages: [],
+     myid: ''
   };
 
   componentDidMount(){
@@ -32,7 +33,20 @@ class SkinChatting extends Component{
 
           });
       //});
+      this._retrieveuserid()
   }
+
+  _retrieveuserid = async () => {
+      try {
+        var ids = await AsyncStorage.getItem('@userid');
+        var user = JSON.parse(ids)
+        //alert(JSON.stringify(user))
+        //alert(user.user.uid);
+        this.setState({ myid: user.user.uid });
+      }catch (error) {
+        console.log(error)
+        }
+    }
 
   onSend(messages = []) {
     //send a new message to the db
@@ -44,7 +58,7 @@ class SkinChatting extends Component{
 
   render() {
 
-    let {isAuthenticated} = this.state
+    let {isAuthenticated, myid} = this.state
      //alert("start render")
     if (!isAuthenticated){//if not Authenticated, show a spinner
       return <ActivityIndicator />
@@ -55,8 +69,8 @@ class SkinChatting extends Component{
         messages={this.state.messages}
         onSend={messages => this.onSend(messages)}
         user={{
-          _id: 1,
-          name:'user',
+          _id: myid,
+          //name:'user',
           //avatar: 'https://store.playstation.com/store/api/chihiro/00_09_000/container/US/en/99/UP1675-CUSA11816_00-AV00000000000012//image?_version=00_09_000&platform=chihiro&w=720&h=720&bg_color=000000&opacity=100'
         }}
       />

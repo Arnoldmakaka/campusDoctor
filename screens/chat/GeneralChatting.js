@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {YellowBox, ActivityIndicator, Alert} from 'react-native';
+import {YellowBox, ActivityIndicator, Alert, AsyncStorage} from 'react-native';
 import firebase from 'react-native-firebase';
 
 import {GiftedChat} from 'react-native-gifted-chat';
@@ -10,7 +10,8 @@ YellowBox.ignoreWarnings(['Warning: componentWill'])
 class GeneralChatting extends Component{
   state = {
     isAuthenticated: true,
-    messages: []
+    messages: [], 
+    myid: ''
   };
 
   componentDidMount(){
@@ -32,7 +33,22 @@ class GeneralChatting extends Component{
 
           });
       //});
+      this._retrieveuserid()
   }
+
+   _retrieveuserid = async () => {
+      try {
+        var ids = await AsyncStorage.getItem('@userid');
+        var user = JSON.parse(ids)
+        //alert(JSON.stringify(user))
+        //alert(user.user.uid);
+        this.setState({ myid: user.user.uid });
+      }catch (error) {
+        console.log(error)
+        }
+    }
+
+
 
   onSend(messages = []) {
     //send a new message to the db
@@ -44,7 +60,7 @@ class GeneralChatting extends Component{
 
   render() {
 
-    let {isAuthenticated} = this.state
+    let {isAuthenticated, myid} = this.state
      //alert("start render")
     if (!isAuthenticated){//if not Authenticated, show a spinner
       return <ActivityIndicator />
@@ -55,8 +71,8 @@ class GeneralChatting extends Component{
         messages={this.state.messages}
         onSend={messages => this.onSend(messages)}
         user={{
-          _id: 2,
-          name:'Arnold',
+          _id: myid,
+          //name:'Arnold',
           //avatar: 'https://store.playstation.com/store/api/chihiro/00_09_000/container/US/en/99/UP1675-CUSA11816_00-AV00000000000012//image?_version=00_09_000&platform=chihiro&w=720&h=720&bg_color=000000&opacity=100'
         }}
 

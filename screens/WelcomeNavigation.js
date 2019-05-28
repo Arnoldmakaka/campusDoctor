@@ -7,9 +7,6 @@ import { createMaterialBottomTabNavigator } from "react-navigation-material-bott
 
 import Welcomescreen from './Welcomescreen';
 import ToDashboard from './ToDashboard';
-import WelcomeLogin from './WelcomeLogin';
-import WelcomeVerify from './WelcomeVerify';
-import Arnold from './Arnold';
 
 class WelcomeNavigation extends Component{
   render() {
@@ -22,10 +19,7 @@ export default WelcomeNavigation;
 
 
 const AppSwitchNavigator = createSwitchNavigator({
-  Makaka: {screen: Arnold},
-	Welcomescreen: {screen: Welcomescreen},
-  Chat: {screen: WelcomeLogin},
-  Dose: {screen: WelcomeVerify},
+  Welcome: {screen: Welcomescreen},
   ToDash: {screen: ToDashboard}
 });
 
